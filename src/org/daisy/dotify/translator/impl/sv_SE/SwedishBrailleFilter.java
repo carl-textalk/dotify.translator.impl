@@ -42,6 +42,7 @@ public class SwedishBrailleFilter implements StringFilter {
 		filters.add(new CapitalizationMarkers());
 
 		Locale l = FilterLocale.parse(locale).toLocale();
+
 		// Text to braille, Pas 1
 		filters.add(new UCharFilter(getResource("sv_SE-pas1.xml"), l));
 		// Text to braille, Pas 2
@@ -52,6 +53,8 @@ public class SwedishBrailleFilter implements StringFilter {
 		if (strict) {
 			filters.add(new StrictFilter());
 		}
+
+
 	}
 
 	@Override
