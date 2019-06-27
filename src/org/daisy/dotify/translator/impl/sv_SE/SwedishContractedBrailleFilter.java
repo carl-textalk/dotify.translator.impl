@@ -20,8 +20,8 @@ public class SwedishContractedBrailleFilter implements StringFilter {
     private HashMap<String, String> contractedBrailleMap;
     private static final String CONTRACTED_BRAILLE_TABLE_PATH = "sv_SE-single-character-contracted-words.xml";
 
-    public static final String CAPITAL_CHAR_MARKER = "\\u2820";
-    public static final String SOFT_HYPHEN = "\\u2820";
+    public static final String CAPITAL_CHAR_MARKER = "\u2820";
+    public static final String SOFT_HYPHEN = "\u00AD";
 
     /**
      * Todo: add support for different grades of contraction.
@@ -48,14 +48,14 @@ public class SwedishContractedBrailleFilter implements StringFilter {
             return str;
         }
         // Strip string from
-        Pattern pattern = Pattern.compile(CAPITAL_CHAR_MARKER + "*([\\p{javaUpperCase}\\p{javaLowerCase}" + SOFT_HYPHEN + "]+)");
+        Pattern pattern = Pattern.compile(CAPITAL_CHAR_MARKER + "*([\\p{javaUpperCase}\\p{javaLowerCase}"+SOFT_HYPHEN+"]+)");
         StringBuilder sb = new StringBuilder();
         String key, replace;
 
         for (String word: words) {
             Matcher matcher = pattern.matcher(word);
             if (matcher.find()) {
-                key = matcher.group(1).toLowerCase();
+                key = matcher.group(1).toLowerCase().replace(SOFT_HYPHEN, "");
                 if (this.contractedBrailleMap.containsKey(key)) {
                     replace = this.contractedBrailleMap.get(key);
                     word = word.substring(0, matcher.start(1)) + replace + word.substring(matcher.end(1));
