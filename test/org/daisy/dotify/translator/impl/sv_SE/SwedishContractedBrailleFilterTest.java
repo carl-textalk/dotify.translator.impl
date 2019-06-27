@@ -67,4 +67,12 @@ public class SwedishContractedBrailleFilterTest {
         String filteredString = this.filter.filter(test);
         assertEquals("⠠⠠⠠j SAKNAR oo⠱", filteredString);
     }
+
+    @Test
+    public void testFilterWhenStringContainsSoftHyphen() {
+        String test = "den här texten inne\u00ADhåller ord med och ut\u00ADan soft hyphen";
+        String filteredString = this.filter.filter(test);
+        System.out.println(filteredString);
+        assertEquals("\\\\ här texten inne\u00ADhåller ord î c u soft hyphen", filteredString);
+    }
 }
