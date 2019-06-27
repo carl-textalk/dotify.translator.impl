@@ -25,12 +25,24 @@ public class SwedishBrailleFilter implements StringFilter {
 	}
 
 	/**
+	 * Creates a new Swedish braille filter.
+	 * @param locale the locale
+	 * @param strict if true the result is braille only, if false the result
+	 * 		contains break point characters such as space, dash and soft hyphen.
+	 */
+	public SwedishBrailleFilter(String locale, boolean strict) {
+		this(locale, strict, false);
+	}
+
+	/**
 	 * Creates a new Swedish braille filter with the specified mode.
 	 * @param locale the locale
 	 * @param strict if true the result is braille only, if false the result 
 	 * 			contains break point characters such as space, dash and soft hyphen.
+	 * @param useContractedBraille Whether or not the string should be translated to contracted braille.
+	 *
 	 */
-	public SwedishBrailleFilter(String locale, boolean strict) {
+	public SwedishBrailleFilter(String locale, boolean strict, boolean useContractedBraille) {
 		filters = new CombinationFilter();
 		// Remove zero width space
 		filters.add(new RegexFilter("\\u200B", ""));
@@ -42,6 +54,12 @@ public class SwedishBrailleFilter implements StringFilter {
 		filters.add(new CapitalizationMarkers());
 
 		Locale l = FilterLocale.parse(locale).toLocale();
+
+
+		if (useContractedBraille) {
+			// Text to braille, shorthand format
+			filters.add(new SwedishContractedBrailleFilter());
+		}
 
 		// Text to braille, Pas 1
 		filters.add(new UCharFilter(getResource("sv_SE-pas1.xml"), l));

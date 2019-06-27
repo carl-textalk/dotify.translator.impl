@@ -237,4 +237,44 @@ public class SwedishBrailleFilterTest {
 	public void testCapitalIWithDot() {
 		assertEquals("⠠⠈⠊", filter.filter("İ"));
 	}
+
+	@Test
+	public void testFilterAppliesContractedBrailleFilterCorrectly(){
+		SwedishBrailleFilter filter_1 = new SwedishBrailleFilter("sv-SE", false, true);
+		String test_string = "jag vet att";
+		String filtered_string = filter_1.filter(test_string);
+		assertEquals("⠚ ⠧⠑⠞ ⠁", filtered_string);
+	}
+
+	@Test
+	public void testFilterAppliesContractedBrailleFilterCorrectlyWithCharCapitalization() {
+		SwedishBrailleFilter filter_1 = new SwedishBrailleFilter("sv-SE", false, true);
+		String test_string = "Hon hade många husdjur";
+		String filtered_string = filter_1.filter(test_string);
+		assertEquals("⠠⠓⠝ ⠓⠈⠕ ⠍⠛ ⠓⠥⠎⠙⠚⠥⠗", filtered_string);
+	}
+
+	@Test
+	public void testFilterDoesNotCrashWhensContractedBrailleFilterIsAppliedForEmptyStrings() {
+		SwedishBrailleFilter filter_1 = new SwedishBrailleFilter("sv-SE", false, true);
+		String test_string = "";
+		String filtered_string = filter_1.filter(test_string);
+		assertEquals("", filtered_string);
+	}
+
+	@Test
+	public void testFilterAppliesContractedBrailleFilterCorrectlyWithWordCapitalization(){
+		SwedishBrailleFilter filter_1 = new SwedishBrailleFilter("sv-SE", false, true);
+		String test_string = "HEY jag heter java";
+		String filtered_string = filter_1.filter(test_string);
+		assertEquals("⠠⠠⠓⠑⠽ ⠚ ⠓⠑⠞⠑⠗ ⠚⠁⠧⠁", filtered_string);
+	}
+
+	@Test
+	public void testFilterAppliesContractedBrailleFilterCorrectlyWithContractionWithSequentialCaptalLetters(){
+		SwedishBrailleFilter filter_1 = new SwedishBrailleFilter("sv-SE", false, true);
+		String test_string = "JAG SAKNAR HONOM";
+		String filtered_string = filter_1.filter(test_string);
+		assertEquals("⠠⠠⠠⠚ ⠎⠁⠅⠝⠁⠗ ⠕⠕⠱", filtered_string);
+	}
 }
