@@ -55,7 +55,6 @@ public class SwedishBrailleFilter implements StringFilter {
 
 		Locale l = FilterLocale.parse(locale).toLocale();
 
-
 		if (useContractedBraille) {
 			// Text to braille, shorthand format
 			filters.add(new SwedishContractedBrailleFilter());
@@ -71,8 +70,6 @@ public class SwedishBrailleFilter implements StringFilter {
 		if (strict) {
 			filters.add(new StrictFilter());
 		}
-
-
 	}
 
 	@Override

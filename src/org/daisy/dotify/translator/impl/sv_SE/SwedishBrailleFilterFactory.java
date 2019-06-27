@@ -22,12 +22,10 @@ class SwedishBrailleFilterFactory implements BrailleFilterFactory {
 
 	@Override
 	public BrailleFilter newFilter(String locale, String mode) throws TranslatorConfigurationException {
-
 		if (hyphenatorService == null) {
 			throw new SwedishFilterConfigurationException("HyphenatorFactoryMakerService not set.");
 		}
 		Optional<String> loc = getSupportedLocale(locale);
-
 		if (loc.isPresent() && mode.equals(TranslatorType.UNCONTRACTED.toString())) {
 
 			DefaultMarkerProcessor sap;

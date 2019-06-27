@@ -25,7 +25,6 @@ class SwedishBrailleTranslatorFactory implements BrailleTranslatorFactory {
 
 	@Override
 	public BrailleTranslator newTranslator(String locale, String mode) throws TranslatorConfigurationException {
-
 		if (hyphenatorService == null) {
 			throw new SwedishTranslatorConfigurationException("HyphenatorFactoryMakerService not set.");
 		}
