@@ -22,10 +22,12 @@ class SwedishBrailleFilterFactory implements BrailleFilterFactory {
 
 	@Override
 	public BrailleFilter newFilter(String locale, String mode) throws TranslatorConfigurationException {
+
 		if (hyphenatorService == null) {
 			throw new SwedishFilterConfigurationException("HyphenatorFactoryMakerService not set.");
 		}
 		Optional<String> loc = getSupportedLocale(locale);
+
 		if (loc.isPresent() && mode.equals(TranslatorType.UNCONTRACTED.toString())) {
 
 			DefaultMarkerProcessor sap;
@@ -35,7 +37,16 @@ class SwedishBrailleFilterFactory implements BrailleFilterFactory {
 				throw new SwedishFilterConfigurationException(e);
 			}
 			return new DefaultBrailleFilter(new SwedishBrailleFilter(loc.get(), true), loc.get(), sap, hyphenatorService);
-		} 
+		} else if (loc.isPresent() && mode.equals(TranslatorType.CONTRACTED.toString())) {
+
+			DefaultMarkerProcessor sap;
+			try {
+				sap = new SwedishMarkerProcessorFactory().newMarkerProcessor(loc.get(), mode);
+			} catch (SwedishMarkerProcessorConfigurationException e) {
+				throw new SwedishFilterConfigurationException(e);
+			}
+			return new DefaultBrailleFilter(new SwedishBrailleFilter(loc.get(), true, true), loc.get(), sap, hyphenatorService);
+		}
 		throw new SwedishFilterConfigurationException("Factory does not support " + locale + "/" + mode);
 	}
 	

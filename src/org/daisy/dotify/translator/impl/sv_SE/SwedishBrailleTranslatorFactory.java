@@ -25,6 +25,7 @@ class SwedishBrailleTranslatorFactory implements BrailleTranslatorFactory {
 
 	@Override
 	public BrailleTranslator newTranslator(String locale, String mode) throws TranslatorConfigurationException {
+
 		if (hyphenatorService == null) {
 			throw new SwedishTranslatorConfigurationException("HyphenatorFactoryMakerService not set.");
 		}
@@ -40,6 +41,18 @@ class SwedishBrailleTranslatorFactory implements BrailleTranslatorFactory {
 
 			return new SimpleBrailleTranslator(
 					new DefaultBrailleFilter(new SwedishBrailleFilter(loc.get()), loc.get(), sap, hyphenatorService),
+					new DefaultBrailleFinalizer(), mode);
+		} else if (loc.isPresent() && mode.equals(TranslatorType.CONTRACTED.toString())) {
+
+			DefaultMarkerProcessor sap;
+			try {
+				sap = new SwedishMarkerProcessorFactory().newMarkerProcessor(loc.get(), mode);
+			} catch (SwedishMarkerProcessorConfigurationException e) {
+				throw new SwedishTranslatorConfigurationException(e);
+			}
+
+			return new SimpleBrailleTranslator(
+					new DefaultBrailleFilter(new SwedishBrailleFilter(loc.get(), false, true), loc.get(), sap, hyphenatorService),
 					new DefaultBrailleFinalizer(), mode);
 		} else if (loc.isPresent() && mode.equals(TranslatorType.PRE_TRANSLATED.toString())) {
 			return new SimpleBrailleTranslator(

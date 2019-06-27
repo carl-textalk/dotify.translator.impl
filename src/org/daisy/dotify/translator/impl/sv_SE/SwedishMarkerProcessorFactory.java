@@ -18,7 +18,7 @@ class SwedishMarkerProcessorFactory {
 
 	public DefaultMarkerProcessor newMarkerProcessor(String locale, String mode) throws SwedishMarkerProcessorConfigurationException {
 		if (FilterLocale.parse(locale).equals(sv)||FilterLocale.parse(locale).equals(sv_SE)) {
-			if (mode.equals(TranslatorType.UNCONTRACTED.toString())) {
+			if (mode.equals(TranslatorType.UNCONTRACTED.toString()) || mode.equals(TranslatorType.CONTRACTED.toString())) {
 	
 				// Svenska skrivregler för punktskrift 2009, page 34
 				RegexMarkerDictionary strong = new RegexMarkerDictionary.Builder().

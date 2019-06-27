@@ -36,6 +36,8 @@ public class SwedishBrailleFilterFactoryService implements
 		this.specs = new ArrayList<>();
 		String displayName = RESOURCE_BUNDLE.getString("uncontracted-6-dot");
 		String desc = RESOURCE_BUNDLE.getString("uncontracted-description");
+		String contractedDisplayName = RESOURCE_BUNDLE.getString("contracted-6-dot");
+		String contractedDesc = RESOURCE_BUNDLE.getString("contracted-description");
 		specs.add(new TranslatorSpecification("sv", TranslatorMode.Builder
 				.withType(TranslatorType.UNCONTRACTED)
 				.displayName(displayName)
@@ -46,11 +48,27 @@ public class SwedishBrailleFilterFactoryService implements
 				.displayName(displayName)
 				.description(desc)
 				.build()));
-	}
-	
-	@Override
-	public boolean supportsSpecification(String locale, String mode) {
-		return ("sv".equalsIgnoreCase(locale) || "sv-SE".equalsIgnoreCase(locale)) && mode.equals(TranslatorType.UNCONTRACTED.toString());
+		specs.add(new TranslatorSpecification("sv", TranslatorMode.Builder
+				.withType(TranslatorType.CONTRACTED)
+				.displayName(contractedDisplayName)
+				.description(contractedDesc)
+				.build()));
+		specs.add(new TranslatorSpecification("sv-SE", TranslatorMode.Builder
+				.withType(TranslatorType.CONTRACTED)
+				.displayName(contractedDisplayName)
+				.description(contractedDesc)
+				.build()));
+    }
+
+    @Override
+    public boolean supportsSpecification(String locale, String mode) {
+        if (("sv".equalsIgnoreCase(locale) || "sv-SE".equalsIgnoreCase(locale)) && mode.equals(TranslatorType.UNCONTRACTED.toString())) {
+            return true;
+        } else if (("sv".equalsIgnoreCase(locale) || "sv-SE".equalsIgnoreCase(locale)) && mode.equals(TranslatorType.CONTRACTED.toString())) {
+            return true;
+        } else {
+            return false;
+        }
 	}
 
 	@Override
@@ -74,7 +92,7 @@ public class SwedishBrailleFilterFactoryService implements
 	public void unsetHyphenator(HyphenatorFactoryMakerService hyphenator) {
 		this.hyphenator = null;
 	}
-	
+
 	@Override
 	public Collection<TranslatorSpecification> listSpecifications() {
 		return specs;

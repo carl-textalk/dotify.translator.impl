@@ -35,13 +35,20 @@ public class SwedishBrailleTranslatorFactoryService implements
 	public SwedishBrailleTranslatorFactoryService() {
 		this.specs = new ArrayList<>();
 		String uncontracted = RESOURCE_BUNDLE.getString("uncontracted-6-dot");
+		String contracted = RESOURCE_BUNDLE.getString("contracted-6-dot");
 		String preTranslated = RESOURCE_BUNDLE.getString("pre-translated");
 		String descUncontracted = RESOURCE_BUNDLE.getString("uncontracted-description");
+		String descContracted = RESOURCE_BUNDLE.getString("contracted-description");
 		String descPreTranslated = RESOURCE_BUNDLE.getString("pre-translated-description");
 		specs.add(new TranslatorSpecification("sv", TranslatorMode.Builder
 				.withType(TranslatorType.UNCONTRACTED)
 				.displayName(uncontracted)
 				.description(descUncontracted)
+				.build()));
+		specs.add(new TranslatorSpecification("sv", TranslatorMode.Builder
+				.withType(TranslatorType.CONTRACTED)
+				.displayName(contracted)
+				.description(descContracted)
 				.build()));
 		specs.add(new TranslatorSpecification("sv", TranslatorMode.Builder
 				.withType(TranslatorType.PRE_TRANSLATED)
@@ -52,6 +59,11 @@ public class SwedishBrailleTranslatorFactoryService implements
 				.withType(TranslatorType.UNCONTRACTED)
 				.displayName(uncontracted)
 				.description(descUncontracted)
+				.build()));
+		specs.add(new TranslatorSpecification("sv-SE", TranslatorMode.Builder
+				.withType(TranslatorType.CONTRACTED)
+				.displayName(contracted)
+				.description(descContracted)
 				.build()));
 		specs.add(new TranslatorSpecification("sv-SE", TranslatorMode.Builder
 				.withType(TranslatorType.PRE_TRANSLATED)
