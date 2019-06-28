@@ -251,7 +251,7 @@ public class SwedishBrailleFilterTest {
 		SwedishBrailleFilter filter_1 = new SwedishBrailleFilter("sv-SE", false, true);
 		String test_string = "Hon hade många husdjur";
 		String filtered_string = filter_1.filter(test_string);
-		assertEquals("⠠⠓⠝ ⠓⠈⠕ ⠍⠛ ⠓⠥⠎⠙⠚⠥⠗", filtered_string);
+		assertEquals("⠠⠓⠕⠝ ⠓⠁⠙⠑ ⠍⠡⠝⠛⠁ ⠓⠥⠎⠙⠚⠥⠗", filtered_string);
 	}
 
 	@Test
@@ -273,8 +273,8 @@ public class SwedishBrailleFilterTest {
 	@Test
 	public void testFilterAppliesContractedBrailleFilterCorrectlyWithContractionWithSequentialCaptalLetters(){
 		SwedishBrailleFilter filter_1 = new SwedishBrailleFilter("sv-SE", false, true);
-		String test_string = "JAG SAKNAR HONOM";
+		String test_string = "JAG SAKNAR HONOM MYCKET";
 		String filtered_string = filter_1.filter(test_string);
-		assertEquals("⠠⠠⠠⠚ ⠎⠁⠅⠝⠁⠗ ⠕⠕⠱", filtered_string);
+		assertEquals("⠠⠠⠠⠚ ⠎⠁⠅⠝⠁⠗ ⠓⠕⠝⠕⠍ ⠽⠱", filtered_string);
 	}
 }

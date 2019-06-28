@@ -18,14 +18,14 @@ public class SwedishContractedBrailleFilterTest {
     public void testFilter() {
         String text = "jag gillar att dansa men inte att sjunga";
         String filteredString = this.filter.filter(text);
-        assertEquals("j gillar a dansa mê ü a sjunga", filteredString);
+        assertEquals("j gillar a dansa men ü a sjunga", filteredString);
     }
 
     @Test
     public void testFilterWithFirstCharacterCapitalMarker() {
         String text = "⠠Test ⠠Testson ⠠Ett livs berättelse om saker som berör många";
         String filteredString = this.filter.filter(text);
-        assertEquals("⠠Test ⠠Testson ⠠§ livs berättelse om saker s berör mg", filteredString);
+        assertEquals("⠠Test ⠠Testson ⠠§ livs berättelse om saker s berör många", filteredString);
     }
 
     @Test
@@ -51,21 +51,21 @@ public class SwedishContractedBrailleFilterTest {
     public void testFilterWithWordCapitalMarker() {
         String test = "⠠⠠JAG börjar att sjunga";
         String filteredString = this.filter.filter(test);
-        assertEquals("⠠⠠j bjr a sjunga", filteredString);
+        assertEquals("⠠⠠j börjar a sjunga", filteredString);
     }
 
     @Test
     public void testFilterWithDoubleBackSlashCharacter() {
         String test = "Kan du ge mig den där";
         String filteredString = this.filter.filter(test);
-        assertEquals("k du ge mig \\\\ d", filteredString);
+        assertEquals("k du ge mig \\ d", filteredString);
     }
 
     @Test
     public void testFilterWhenSequentialCapitalWordsExists() {
-        String test = "⠠⠠⠠JAG SAKNAR HONOM⠱";
+        String test = "⠠⠠⠠JAG SAKNAR HONOM MYCKET⠱";
         String filteredString = this.filter.filter(test);
-        assertEquals("⠠⠠⠠j SAKNAR oo⠱", filteredString);
+        assertEquals("⠠⠠⠠j SAKNAR HONOM y⠱", filteredString);
     }
 
     @Test
@@ -73,6 +73,6 @@ public class SwedishContractedBrailleFilterTest {
         String test = "den här texten inne\u00ADhåller ord med och ut\u00ADan soft hyphen";
         String filteredString = this.filter.filter(test);
         System.out.println(filteredString);
-        assertEquals("\\\\ här texten inne\u00ADhåller ord î c u soft hyphen", filteredString);
+        assertEquals("\\ här texten inne\u00ADhåller ord î c u soft hyphen", filteredString);
     }
 }
